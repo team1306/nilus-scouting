@@ -29,6 +29,16 @@ class Match(models.Model):
     blue_two = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='blue_two')
     blue_three = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='blue_three')
 
+    def all_teams(self):
+        teams = set()
+        teams.add(self.red_one)
+        teams.add(self.red_two)
+        teams.add(self.red_three)
+        teams.add(self.blue_one)
+        teams.add(self.blue_two)
+        teams.add(self.blue_three)
+        return teams
+
     def __str__(self):
         return self.number + ' at ' + str(self.event)
 
