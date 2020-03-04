@@ -46,7 +46,6 @@ class Match(models.Model):
         verbose_name_plural = "matches"
 
 class ScoutResponse(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
