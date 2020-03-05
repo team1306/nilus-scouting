@@ -1,4 +1,5 @@
 from django.db import models
+from enum import Enum
 
 class Team(models.Model):
     number = models.PositiveIntegerField(unique=True)
@@ -38,6 +39,21 @@ class Match(models.Model):
         teams.add(self.blue_two)
         teams.add(self.blue_three)
         return teams
+    
+    def get_team_color(self, team):
+        if team == self.red_one:
+            return AllianceColor.RED
+        if team == self.red_two:
+            return AllianceColor.RED
+        if team == self.red_three:
+            return AllianceColor.RED
+        if team == self.blue_one:
+            return AllianceColor.BLUE
+        if team == self.blue_two:
+            return AllianceColor.BLUE
+        if team == self.blue_three:
+            return AllianceColor.BLUE
+        raise ValueError('That team is not in this match')
 
     def __str__(self):
         return self.number + ' at ' + str(self.event)
@@ -76,3 +92,7 @@ class ScoutResponse(models.Model):
     tele_farthest_shot = models.CharField(max_length=2, null=True, blank=True, choices=SHOT_DISTANCE_CHOICES)
 
     comments = models.TextField(blank=True)
+
+class AllianceColor(Enum):
+    RED = 1
+    BLUE = 2
