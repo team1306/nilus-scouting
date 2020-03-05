@@ -26,9 +26,12 @@ function hookUpAdderButton(button, fieldEl, increment)
 {
     button.click(function()
     {
-        var current = parseInt(fieldEl.value);
-        var newVal = current + increment;
-        if(newVal < 0) { return; }
+        var newVal;
+        var current = fieldEl.value;
+        current = (current === "") ? 0 : parseInt(current);
+        if(isNaN(current)) { current = 0; }
+        newVal = current + increment;
+        if(newVal < 0) { newVal = 0; }
         fieldEl.value = newVal;
     });
 }
