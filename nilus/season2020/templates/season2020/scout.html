@@ -25,7 +25,7 @@
         </div>
 
         <div class="card-body">
-            <form>
+            <form id="formScouting">
                 {% csrf_token %}
 
                 <h4 class="card-title">Autonomous</h4>
@@ -81,15 +81,41 @@
                     </div>
                 </div>
 
-                <div class="custom-control custom-checkbox">
-                    <input id="inputTeleControlPanel" name="teleControlPanel" type="checkbox" value="yes" class="custom-control-input">
-                    <label for="inputTeleControlPanel" class="custom-control-label">Did spin control panel?</label>
+                <div class="form-group">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="inputDistanceNone" name="distance" class="custom-control-input" value="" checked>
+                        <label for="inputDistanceNone" class="custom-control-label">Did not shoot</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="inputDistanceClose" name="distance" class="custom-control-input" value="UC">
+                        <label for="inputDistanceClose" class="custom-control-label">Shooting from up close</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="inputDistanceLine" name="distance" class="custom-control-input" value="IL">
+                        <label for="inputDistanceLine" class="custom-control-label">Shooting from initiation line</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="inputDistanceNear" name="distance" class="custom-control-input" value="NT">
+                        <label for="inputDistanceNear" class="custom-control-label">Shooting from near trench</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="inputDistanceFar" name="distance" class="custom-control-input" value="FT">
+                        <label for="inputDistanceFar" class="custom-control-label">Shooting from far trench</label>
+                    </div>
                 </div>
 
-                <div class="custom-control custom-checkbox">
-                    <input id="inputTeleClimb" name="teleClimb" type="checkbox" value="yes" class="custom-control-input">
-                    <label for="inputTeleClimb" class="custom-control-label">Did climb?</label>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input id="inputTeleControlPanel" name="teleControlPanel" type="checkbox" value="yes" class="custom-control-input">
+                        <label for="inputTeleControlPanel" class="custom-control-label">Did spin control panel?</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input id="inputTeleClimb" name="teleClimb" type="checkbox" value="yes" class="custom-control-input">
+                        <label for="inputTeleClimb" class="custom-control-label">Did climb?</label>
+                    </div>
                 </div>
+
+                <button type="submit" id="buttonSubmit" class="btn btn-primary w-100">Submit</button>
             </form>
         </div>
     </div>
