@@ -6,10 +6,11 @@ from . import models
 def scout(request, match_id, team_num):
     match = get_object_or_404(models.Match, pk=match_id)
     team = get_object_or_404(models.Team, number=team_num)
-    color = match.get_team_color(team)
 
     if not team in match.all_teams():
         return http.HttpResponseForbidden('This team is not part of this match.')
+
+    color = match.get_team_color(team)
 
     context = {
         "match": match,
