@@ -89,7 +89,7 @@ class ScoutResponse(models.Model):
     tele_high_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
     tele_control_panel = models.BooleanField(default=False)
     tele_did_climb = models.BooleanField(default=False)
-    tele_farthest_shot = models.CharField(max_length=2, null=True, blank=True, choices=SHOT_DISTANCE_CHOICES)
+    tele_farthest_shot = models.CharField(max_length=2, blank=True, choices=SHOT_DISTANCE_CHOICES)
 
     comments = models.TextField(blank=True)
 
