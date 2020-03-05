@@ -33,10 +33,12 @@
                 <div class="form-group">
                     <label for="inputAutoLow">Balls scored in low goal:</label>
                     <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="btnAutoLowDec" class="btn btn-danger font-weight-bold" type="button">-</button>
+                        </div>
                         <input id="inputAutoLow" name="autoLow" type="number" min="0" value="0" class="form-control">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">+</button>
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">-</button>
+                            <button id="btnAutoLowInc" class="btn btn-success font-weight-bold" type="button">+</button>
                         </div>
                     </div>
                 </div>
@@ -44,10 +46,12 @@
                 <div class="form-group">
                     <label for="inputAutoHigh">Balls scored in high goal:</label>
                     <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="btnAutoHighDec" class="btn btn-danger font-weight-bold" type="button">-</button>
+                        </div>
                         <input id="inputAutoHigh" name="autoHigh" type="number" min="0" value="0" class="form-control">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">+</button>
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">-</button>
+                            <button id="btnAutoHighInc" class="btn btn-success font-weight-bold" type="button">+</button>
                         </div>
                     </div>
                 </div>
@@ -62,10 +66,12 @@
                 <div class="form-group">
                     <label for="inputTeleLow">Balls scored in low goal:</label>
                     <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="btnTeleLowDec" class="btn btn-danger font-weight-bold" type="button">-</button>
+                        </div>
                         <input id="inputTeleLow" name="teleLow" type="number" min="0" value="0" class="form-control">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">+</button>
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">-</button>
+                            <button id="btnTeleLowInc" class="btn btn-success font-weight-bold" type="button">+</button>
                         </div>
                     </div>
                 </div>
@@ -73,10 +79,12 @@
                 <div class="form-group">
                     <label for="inputTeleHigh">Balls scored in high goal:</label>
                     <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="btnTeleHighDec" class="btn btn-danger font-weight-bold" type="button">-</button>
+                        </div>
                         <input id="inputTeleHigh" name="teleHigh" type="number" min="0" value="0" class="form-control">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">+</button>
-                            <button class="btn btn-outline-secondary font-weight-bold" type="button">-</button>
+                            <button id="btnTeleHighInc" class="btn btn-success font-weight-bold" type="button">+</button>
                         </div>
                     </div>
                 </div>
@@ -124,7 +132,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <script src="{% static 'season2020/scout.js' %}"></script>
+    <script type="text/javascript" src="{% static 'season2020/scout.js' %}"></script>
 </body>
 
 </html>
