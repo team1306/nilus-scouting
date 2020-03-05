@@ -46,7 +46,33 @@ class Match(models.Model):
         verbose_name_plural = "matches"
 
 class ScoutResponse(models.Model):
+    # Constants
+    SHOT_FAR_TRENCH = 'FT'
+    SHOT_NEAR_TRENCH = 'NT'
+    SHOT_INIT_LINE = 'IL'
+    SHOT_UP_CLOSE = 'UC'
+
+    SHOT_DISTANCE_CHOICES = [
+        (SHOT_FAR_TRENCH, 'Far trench'),
+        (SHOT_NEAR_TRENCH, 'Near trench'),
+        (SHOT_INIT_LINE, 'Initiation line'),
+        (SHOT_UP_CLOSE, 'Up close'),
+    ]
+
+    # Basic details
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    # Autonomous
+    auto_low_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
+    auto_high_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
+    auto_can_intake = models.BooleanField(default=False)
+
+    # Teleop
+    tele_low_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
+    tele_high_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
+    tele_control_panel = models.BooleanField(default=False)
+    tele_did_climb = models.BooleanField(default=False)
+    tele_farthest_shot = models.CharField(max_length=2, null=True, blank=True, choices=SHOT_DISTANCE_CHOICES)
 
     comments = models.TextField(blank=True)
