@@ -1,0 +1,4 @@
+.disable-touch
+{
+    touch-action: manipulation;
+}

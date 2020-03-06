@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django import http
+from django import http, urls
 
 from . import models
 
@@ -19,3 +19,9 @@ def scout(request, match_id, team_num):
     }
 
     return render(request, 'season2020/scout.html', context)
+
+def submit_scout(request, match_id, team_num):
+    return http.HttpResponseRedirect(urls.reverse('season2020:scout_success'))
+
+def scout_success(request):
+    return http.HttpResponse('Submitted')
