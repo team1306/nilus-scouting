@@ -21,6 +21,7 @@ def scout(request, match_id, team_num):
     return render(request, 'season2020/scout.html', context)
 
 def submit_scout(request, match_id, team_num):
+    # TODO Get response, validate, and save to database
     return http.HttpResponseRedirect(urls.reverse('season2020:scout_success'))
 
 def scout_success(request):

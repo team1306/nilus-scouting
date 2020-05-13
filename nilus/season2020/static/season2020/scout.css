@@ -1,4 +1,3 @@
-.disable-touch
-{
+.disable-touch {
     touch-action: manipulation;
 }
