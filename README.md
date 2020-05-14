@@ -52,7 +52,7 @@ With pipenv installed, you should be able to run the `pipenv` command.
 If not, you can also use `python3 -m pipenv`.
 
 Now, we'll use pipenv to install the Python dependencies for the project.  
-`cd` into the respository directly, the with with Pipfile in it.
+`cd` into the respository, the directory with Pipfile in it.  
 Now, you should be able to run:
 ```bash
 pipenv sync --dev
@@ -66,6 +66,23 @@ pipenv shell
 ```
 When in the virtualenv, you should see an additional prefix in your shell prompt.
 Django should now be available, even if it's not installed globally.
+
+### Configuring the Django project
+
+When first working with this project, you will need to set up the database.  
+For now, the database will automatically be stored in a sqlite file, however we may move to a larger-scale database in the future.  
+The database will be empty when you first start, as this is not tracked in git.
+
+First, we need to migrate the database. This applies the database schema that's been developed so far.  
+`cd` into the directory containing manage.py, and run:
+```bash
+./manage.py migrate
+```
+
+If that succeeds, you'll want to make an administrator user account for yourself. Run:
+```bash
+./manage.py createsuperuser
+```
 
 ### Using VSCode
 
@@ -94,12 +111,15 @@ TODO
 This repository includes a VSCode launch configuration file, so you can launch and debug the server from here.
 To do so, head to the 'Run' page and click the play button, or press F5 from anywhere.
 
-This will start the development server at localhost:8000.  
-This is only for testing -- the development server must not be used in production.
+This will start the development server at localhost:8000.
+This is only for testing -- the development server must not be used in production.  
 You can then start accessing the pages in your browser:  
 http://localhost:8000/admin  
 http://localhost:8000/season2020/whatever  
 http://localhost:8000/thirdexample
+
+Once you're used to this, you may want to learn how to launch the server using manage.py.  
+It allows you to pass additional options that may be useful.
 
 ## Development best practices and guidelines
 
