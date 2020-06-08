@@ -20,5 +20,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('season2020/', include('season2020.urls')),
+    path('scoutAdmin/', include('adminApp.urls')),
+    path('dataview/', include('viewApp.urls')),
     path('', views.landing, name="landing")
 ]

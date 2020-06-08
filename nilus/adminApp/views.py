@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from django import http, urls
 
-# Create your views here.
+from . import models
+
+def testPage(request):
+    return http.HttpResponse("Test Sucessfull- adminApp")

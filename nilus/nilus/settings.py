@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'season2020.apps.Season2020Config',
+    'adminApp.apps.AdminappConfig',
+    'viewApp.apps.ViewappConfig',
 ]
 
 MIDDLEWARE = [
