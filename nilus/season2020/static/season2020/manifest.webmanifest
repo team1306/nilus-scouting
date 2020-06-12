@@ -1,0 +1,18 @@
+{
+    "short_name": "2020 Scout",
+    "name": "Team 1306 Scouting App: 2020",
+    "icons": [
+        {
+            "src": "/static/season2020/images/icons-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/static/season2020/images/icons-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/season2020/install",
+    "display": "fullscreen"
+}

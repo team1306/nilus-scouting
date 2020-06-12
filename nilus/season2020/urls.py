@@ -7,4 +7,6 @@ urlpatterns = [
     path('scout/<int:match_id>/<int:team_num>/', views.scout, name='scout'),
     path('scout/submit/<int:match_id>/<int:team_num>/', views.submit_scout, name='submit_scout'),
     path('scout/success/', views.scout_success, name='scout_success'),
+    path('install/', views.install_page, name = "install"),
+    path('serviceworker.js',views.service_worker, name = "service-worker"),
 ]
