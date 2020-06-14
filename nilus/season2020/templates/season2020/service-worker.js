@@ -1,7 +1,3 @@
-{% load static %}
-
-/* IMPORTANT do not use single line comments in this file- when minified they extend through whole remaining lines */
-
 var CACHE = 'network-or-cache';
 
 /* On install, cache some resource.*/
@@ -29,9 +25,8 @@ self.addEventListener('fetch', function (evt) {
 function precache() {
   return caches.open(CACHE).then(function (cache) {
     return cache.addAll([
-      {% for match in matches %}
-          "{{urlbase}}{{match}}",
-    {% endfor %}
+      '/season2020/install/',
+      '/season2020/scout/',
     ]);
   });
 }

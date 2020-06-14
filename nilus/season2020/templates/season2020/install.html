@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'season2020/scout.css' %}">
     <link rel="icon" href="{% static 'season2020/images/icons-192.png' %}">
     <link rel="manifest" href="{% static 'season2020/manifest.webmanifest'%}">
@@ -15,20 +16,35 @@
 </head>
 
 <body>
-   <button onclick = "window.installEvent.prompt()"> install </button>
-   <script>
-    // Register service worker to satisfy install criteria
-    navigator.serviceWorker.register("{% url 'season2020:service-worker' %}");
+    <button onclick="window.installEvent.prompt()"> install </button>
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        console.log("Installing");
-        // Prevent the mini-infobar from appearing on mobile
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        window.installEvent = e;
-        // Update UI notify the user they can install the PWA
-});
-   </script>
+    <form action="{% url 'season2020:scout' %}">
+        <label for="matchNumber">Match Number</label>
+        <input type="number" step="1" name="matchNumber">
+        <br>
+        <label for="teamNumber">Team Number</label>
+        <input type="number" step="1" name="teamNumber">
+        <br>
+        <label for="teamName">Team Name</label>
+        <input type="text" name="teamName">
+        <input type="submit">
+    </form>
+
+    <script>
+        // Register service worker to satisfy install criteria
+        navigator.serviceWorker.register("{% url 'season2020:service-worker.js' %}", {
+            "scope": "/season2020/",
+        });
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log("Installing");
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            window.installEvent = e;
+            // Update UI notify the user they can install the PWA
+        });
+    </script>
 </body>
 
 </html>
