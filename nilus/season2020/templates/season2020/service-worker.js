@@ -5,7 +5,7 @@
 var CACHE = 'network-or-cache';
 
 /* On install, cache some resource.*/
-self.addEventListener('install', function(evt) {
+self.addEventListener('install', function (evt) {
   console.log('The service worker is being installed.');
 
   /* Ask the service worker to keep installing until the returning promise
@@ -15,11 +15,12 @@ self.addEventListener('install', function(evt) {
 
 /* On fetch, use cache but update the entry with the latest contents
  from the server. */
-self.addEventListener('fetch', function(evt) {
+self.addEventListener('fetch', function (evt) {
   console.log('The service worker is serving the asset.');
   /* Try network and if it fails, go for the cached copy. */
   evt.respondWith(fromNetwork(evt.request, 400).catch(function () {
-    return fromCache(evt.request);
+    console.log('Fetching from cache');
+    return fromCache(removeQueryParameters(evt.request));
   }));
 });
 
@@ -28,9 +29,9 @@ self.addEventListener('fetch', function(evt) {
 function precache() {
   return caches.open(CACHE).then(function (cache) {
     return cache.addAll([
-      {% for match in matches%}
+      {% for match in matches %}
           "{{urlbase}}{{match}}",
-      {% endfor %}
+    {% endfor %}
     ]);
   });
 }
@@ -45,7 +46,7 @@ function fromNetwork(request, timeout) {
     fetch(request).then(function (response) {
       clearTimeout(timeoutId);
       fulfill(response);
-    /* Reject also if network fetch rejects. */
+      /* Reject also if network fetch rejects. */
     }, reject);
   });
 }
@@ -59,4 +60,23 @@ function fromCache(request) {
       return matching || Promise.reject('no-match');
     });
   });
+}
+
+/* Remove query parameters from request url.
+  This will create a new Request, where query parameters ("/?field:value...")
+  are removed from the url. This is so the cache is able to fetch and serve the
+  url without query parameters, which can then be read by the served content.
+  
+  Some information from the request is not copied over; use this onlyl for requests
+  that will be sent to the cache.
+
+  @param {Request} request - resource requested
+  @return {Request} request without query parameterss
+*/
+function removeQueryParameters(request) {
+  let url = new URL(request.url);
+  url.fragment = '';
+  url.search = '';
+  // by passing in only the url, some information is lost. 
+  return new Request(url);
 }
