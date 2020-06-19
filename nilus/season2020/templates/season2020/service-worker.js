@@ -27,6 +27,7 @@ function precache() {
     return cache.addAll([
       '/season2020/install/',
       '/season2020/scout/',
+      '{% static 'season2020/js/query-parameters.js' %}'
     ]);
   });
 }
