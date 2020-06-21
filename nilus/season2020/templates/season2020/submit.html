@@ -1,0 +1,30 @@
+{% extends 'season2020/partials/skeleton.html' %}
+
+{% load static %}
+
+{% block script_includes %}
+    {{block.super}}
+    <script src="{% static 'season2020/js/query-parameters.js'%}"></script>
+
+    <script>
+        /**
+        * Called when the form has successfully been pushed to the server
+        */
+        function onSuccess(){
+            alert("Submitted successfully!");
+            window.location.replace("{% url 'season2020:home'%}");
+        }
+
+        function onDeferr(){
+            alert("Saved to browser, must submit later.");
+            window.location.replace("{% url 'season2020:home'%}");
+        }
+
+        function onError(message){
+            alert("Uh Oh! "+message);
+            window.location.replace("{% url 'season2020:home'%}");
+        }
+
+        onError("This page isn't implemented!");
+    </script>
+{% endblock %}

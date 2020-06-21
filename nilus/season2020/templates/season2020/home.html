@@ -1,0 +1,29 @@
+{% extends 'season2020/partials/skeleton.html' %}
+
+{% load static %}
+
+{% block body%}
+<table>
+    <tr>
+        <th>Match</th>
+        <th>Red 1</th>
+        <th>Red 2</th>
+        <th>Red 3</th>
+        <th>Blue 1</th>
+        <th>Blue 2</th>
+        <th>Blue 3</th>
+    </tr>
+        {% for match in matches%}
+            <tr>
+                <td>{{match.number}}</td>
+                <td class = "red_team"><a href = "{% url 'season2020:scout'%}?match={{match.number}}&team={{match.red1}}">{{match.red1}}</a></td>
+                <td class = "red_team"><a href = "{% url 'season2020:scout'%}?match={{match.number}}&team={{match.red2}}">{{match.red2}}</a></td>
+                <td class = "red_team"><a href = "{% url 'season2020:scout'%}?match={{match.number}}&team={{match.red3}}">{{match.red3}}</a></td>
+                <td class = "blue_team"><a href = "{% url 'season2020:scout'%}?match={{match.number}}&team={{match.blue1}}">{{match.blue1}}</a></td>
+                <td class = "blue_team"><a href = "{% url 'season2020:scout'%}?match={{match.number}}&team={{match.blue2}}">{{match.blue2}}</a></td>
+                <td class = "blue_team"><a href = "{% url 'season2020:scout'%}?match={{match.number}}&team={{match.blue3}}">{{match.blue3}}</a></td>
+            </tr> 
+        {% endfor %}
+        </table>
+
+{% endblock %}

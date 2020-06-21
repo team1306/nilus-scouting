@@ -1,3 +1,5 @@
+{% load static %}
+
 var CACHE = 'network-or-cache';
 
 /* On install, cache some resource.*/
@@ -25,9 +27,10 @@ self.addEventListener('fetch', function (evt) {
 function precache() {
   return caches.open(CACHE).then(function (cache) {
     return cache.addAll([
-      '/season2020/install/',
-      '/season2020/scout/',
-      '{% static 'season2020/js/query-parameters.js' %}'
+      '{% url 'season2020:home' %}',
+      '{% url 'season2020:submit_view' %}',
+      '{% url 'season2020:scout' %}',
+      '{% static 'season2020/js/query-parameters.js' %}',
     ]);
   });
 }

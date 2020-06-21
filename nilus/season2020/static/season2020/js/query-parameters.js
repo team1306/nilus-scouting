@@ -1,14 +1,14 @@
 /* A script to fetch query parameters and insert them into the page.
  * 
  * Pages with this script included can insert parameters into their html 
- * by using a <span class = "search-parameter">{keyvalue}</span>
+ * by using a <element class = "search-parameter">{keyvalue}</element>
  * 
  * This file contains the following functions for external and internal use:
  * - getOneSearchParameter(key) : returns the value of a specific key,
  *      or undefined if not found.
  * 
  * This file contains the following functions for internal use only: 
- * - insertPageParameters() : finds all and inserts content to all proper <span> tags
+ * - insertPageParameters() : finds all and inserts content to all proper <element> tags
  * 
  * Script requirments: 
  *  - JQuery 
@@ -39,7 +39,7 @@ var getOneSearchParameter = function (key) {
  * Find all <span> of class "search-parameter" and insert 
  */
 function insertPageParameters() {
-    $("span.search-parameter").html((index, oldhtml) => {
+    $(".search-parameter").html((index, oldhtml) => {
         let paramName = oldhtml;
         console.log(paramName);
         let paramValue = getOneSearchParameter(paramName);
