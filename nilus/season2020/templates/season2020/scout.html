@@ -9,14 +9,19 @@
         {% else %}
         <div class="card-header bg-primary text-white text-center">
         {% endif %}
-            Scouting
+            Scouting team
             <span class="font-weight-bold search-parameter">teamNumber</span>
-            <span class="search-parameter">teamName</span>
+            match
+            <span class="search-parameter">matchNumber</span>
         </div>
 
         <div class="card-body">
-            <form id="formScouting" method="post" action="{% url 'season2020:submit_view'%}">
+            <form id="formScouting" method="get" action="{% url 'season2020:submit_view'%}">
                 {% csrf_token %}
+
+                <!-- Fields to be filled out by script -->
+                <input id="teamNumber" name = "teamNumber" type="hidden" value="">
+                <input id="matchNumber" name="matchNumber" type="hidden" value="">
 
                 <h4 class="card-title">Autonomous</h4>
 
@@ -122,8 +127,8 @@
 
 {% block script_includes %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'season2020/js/scout.js' %}"></script>
     <script type="text/javascript" src="{% static 'season2020/js/query-parameters.js'%}"></script>
+    <script type="text/javascript" src="{% static 'season2020/js/scout.js' %}"></script>
 {% endblock %}
 
 </html>

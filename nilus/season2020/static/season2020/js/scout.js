@@ -35,3 +35,10 @@ function hookUpAdderButton(button, fieldEl, increment)
         fieldEl.value = newVal;
     });
 }
+
+
+// insert team name and match number into the form
+let match = queryParameters.getOne("matchNumber");
+let team = queryParameters.getOne("teamNumber");
+$("input#matchNumber").val(match)
+$("input#teamNumber").val(team)

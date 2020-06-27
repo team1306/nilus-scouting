@@ -3,9 +3,11 @@
  * Pages with this script included can insert parameters into their html 
  * by using a <element class = "search-parameter">{keyvalue}</element>
  * 
- * This file contains the following functions for external and internal use:
- * - getOneSearchParameter(key) : returns the value of a specific key,
- *      or undefined if not found.
+ * This module contains external access functions inside of a global object called queryParamters.
+ * Fields inside of queryParameters are:
+ *  - queryParameters.findOne(key): a function that returns the value of the given key in the search
+ *                                  parameters, or null if missing.
+ *  - queryParameters.findAll(): a function that returns all key-value pairs from the search params in an Object
  * 
  * This file contains the following functions for internal use only: 
  * - insertPageParameters() : finds all and inserts content to all proper <element> tags
@@ -13,16 +15,21 @@
  * Script requirments: 
  *  - JQuery 
  */
-
+var queryParameters = {}
 let searchparams = (new URL(document.location)).searchParams;
 
 /**
- * Equivalent of fetching search parameters directly from the document location.
+ * Transforms the query string into a javascript object with the same keys and values
  * 
- * @return {Object} search query parameters
+ * If the query string is malformed or missing, it could throw an error. Relies on string parsing.
+ * 
+ * @return {Object} search query parameters.
  */
-var getAllSearchParameters = function () {
-    throw "not yet implemented!"
+queryParameters.getAll = function () {
+    // taken directly from stack overflow :^)
+    // https://stackoverflow.com/a/8649003/10717280
+    let search = location.search.substring(1);
+    return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
 }
 
 /**
@@ -31,7 +38,7 @@ var getAllSearchParameters = function () {
  *  or "field2", NOT "field.subfield"
  * @return field value or undefined
  */
-var getOneSearchParameter = function (key) {
+queryParameters.getOne = function (key) {
     return searchparams.get(key);
 }
 
@@ -41,9 +48,9 @@ var getOneSearchParameter = function (key) {
 function insertPageParameters() {
     $(".search-parameter").html((index, oldhtml) => {
         let paramName = oldhtml;
-        console.log(paramName);
-        let paramValue = getOneSearchParameter(paramName);
-        console.log(paramValue);
+        let paramValue = queryParameters.getOne(paramName);
+        console.log(paramValue)
+        console.log(paramName+ ": "+ paramValue);
         return paramValue;
     });
 }
