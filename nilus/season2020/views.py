@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
 from django import http, urls
+from django.shortcuts import get_object_or_404, render
+
+from settings import settings
 
 from . import models
 
@@ -24,43 +26,50 @@ def install_page(request):
 def home_page(request):
     # TODO: Pull match schedule from database/blue alliance
     context = {
-        "matches":[
+        "matches": [
             {
                 "number": 1,
-                "red1":1,
-                "red2":2,
-                "red3":3,
-                "blue1":4,
-                "blue2":5,
-                "blue3":6,
+                "red1": 1,
+                "red2": 2,
+                "red3": 3,
+                "blue1": 4,
+                "blue2": 5,
+                "blue3": 6,
             },
             {
                 "number": 2,
-                "red1":11,
-                "red2":22,
-                "red3":33,
-                "blue1":44,
-                "blue2":55,
-                "blue3":66,
+                "red1": 11,
+                "red2": 22,
+                "red3": 33,
+                "blue1": 44,
+                "blue2": 55,
+                "blue3": 66,
             },
             {
                 "number": 3,
-                "red1":111,
-                "red2":222,
-                "red3":333,
-                "blue1":444,
-                "blue2":555,
-                "blue3":666,
+                "red1": 111,
+                "red2": 222,
+                "red3": 333,
+                "blue1": 444,
+                "blue2": 555,
+                "blue3": 666,
             },
             {
                 "number": 4,
-                "red1":1111,
-                "red2":2222,
-                "red3":3333,
-                "blue1":4444,
-                "blue2":5555,
-                "blue3":6666,
+                "red1": 1111,
+                "red2": 2222,
+                "red3": 3333,
+                "blue1": 4444,
+                "blue2": 5555,
+                "blue3": 6666,
             },
         ]
     }
-    return render(request, "season2020/home.html",context=context)
+    return render(request, "season2020/home.html", context=context)
+
+def service_worker(request):
+    context = {
+        "static_paths":[]
+    }
+
+    return render(request, "season2020/service-worker.js", context=context, content_type='application/javascript')

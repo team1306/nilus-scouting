@@ -11,6 +11,5 @@ urlpatterns = [
     path('home/', views.home_page, name = "home"),
 
     # need to include service worker for url rendering
-    path('service-worker.js', TemplateView.as_view(template_name="season2020/service-worker.js",
-        content_type='application/javascript'), name='service-worker.js')
+    path('service-worker.js', views.service_worker, name='service-worker.js')
 ]
