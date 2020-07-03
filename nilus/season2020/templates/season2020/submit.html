@@ -5,6 +5,8 @@
 {% block script_includes %}
     {{block.super}}
     <script src="{% static 'season2020/js/query-parameters.js'%}"></script>
+    <script src="{% static 'global/js/localforage.js'%}"></script>
+    <script src="{% static 'season2020/js/storageWrapper.js'%}"></script>
 
     <script>
         /**
@@ -15,16 +17,33 @@
             window.location.replace("{% url 'season2020:home'%}");
         }
 
-        function onDeferr(){
+        function onDeferr(message){
+            console.log(message);
             alert("Saved to browser, must submit later.");
             window.location.replace("{% url 'season2020:home'%}");
         }
 
         function onError(message){
+            console.log(message);
             alert("Uh Oh! "+message);
             window.location.replace("{% url 'season2020:home'%}");
         }
 
-        onError("This page isn't implemented!");
+        //actually push form 
+
+        let form = queryParameters.getAll()
+        console.log(form)
+
+        //push form
+        let pushForm = function(formVal){
+            throw "pushing not yet implemented";
+        }
+        //save form locally
+        savePromise = store.saveReport(form);
+        savePromise.catch(onError);
+        pushPromise = savePromise.then(pushForm);
+        pushPromise.then(onSuccess);
+        pushPromise.catch(onDeferr);
+
     </script>
 {% endblock %}
