@@ -5,3 +5,14 @@ td.red_team{
 td.blue_team{
     background-color: lightskyblue;
 }
+
+td a {
+    color:black;
+}
+
+td.completed a{
+    color:#555;
+    font-weight: bolder;
+    text-decoration: line-through;
+    text-decoration-thickness: 0.15em;
+}
