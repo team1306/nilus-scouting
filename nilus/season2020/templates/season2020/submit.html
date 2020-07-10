@@ -5,7 +5,9 @@
 {% block script_includes %}
     {{block.super}}
     <script src="{% static 'season2020/js/query-parameters.js'%}"></script>
+
     <script src="{% static 'global/js/localforage.js'%}"></script>
+    <script src="{% static 'global/js/localforagefind.js'%}"></script>
     <script src="{% static 'season2020/js/storageWrapper.js'%}"></script>
 
     <script>
@@ -32,6 +34,7 @@
         //actually push form 
 
         let form = queryParameters.getAll()
+        form.isMatchReport = true;
         console.log(form)
 
         //push form
