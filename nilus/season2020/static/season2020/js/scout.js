@@ -40,5 +40,9 @@ function hookUpAdderButton(button, fieldEl, increment)
 // insert team name and match number into the form
 let match = queryParameters.getOne("matchNumber");
 let team = queryParameters.getOne("teamNumber");
+if(!(match&&team)){
+    console.log("Did not have expected page search parameters.");
+    alert("Page did not load properly!");
+}
 $("input#matchNumber").val(match)
 $("input#teamNumber").val(team)
