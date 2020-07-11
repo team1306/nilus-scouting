@@ -4,11 +4,9 @@
 
 {% block script_includes %}
     {{block.super}}
-    <script src="{% static 'season2020/js/query-parameters.js'%}"></script>
 
-    <script src="{% static 'global/js/localforage.js'%}"></script>
-    <script src="{% static 'global/js/localforagefind.js'%}"></script>
-    <script src="{% static 'season2020/js/storageWrapper.js'%}"></script>
+    {% include "season2020/partials/include_queryparameterscripts.html"%}
+    {% include "season2020/partials/include_storagescripts.html"%}
 
     <script>
         /**
