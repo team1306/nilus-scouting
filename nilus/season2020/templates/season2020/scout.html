@@ -127,8 +127,10 @@
 
 {% block script_includes %}
     {{ block.super }}
-    <script type="text/javascript" src="{% static 'season2020/js/query-parameters.js'%}"></script>
+    {% include "season2020/partials/include_queryparameterscripts.html"%}
+    {% include "season2020/partials/include_storagescripts.html"%}
     <script type="text/javascript" src="{% static 'season2020/js/scout.js' %}"></script>
+    
 {% endblock %}
 
 </html>
