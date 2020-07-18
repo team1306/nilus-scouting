@@ -67,9 +67,24 @@ def home_page(request):
     }
     return render(request, "season2020/home.html", context=context)
 
+
+def submit_form(request):
+    print(request.POST)
+    return http.HttpResponse(status=200)
+
+
+
+# Rendered Javascript objects.
+# Below are not views but various script elements that needed to be passed through the renderer,
+# for instance to use the {% url %} tag
+
+
 def service_worker(request):
     context = {
-        "static_paths":[]
+        "static_paths": []
     }
+    return render(request, "season2020/renderedScripts/service-worker.js", context=context, content_type='application/javascript')
 
-    return render(request, "season2020/service-worker.js", context=context, content_type='application/javascript')
+
+def submit_script(request):
+    return render(request, "season2020/renderedScripts/postForms.js", content_type='application/javascript')

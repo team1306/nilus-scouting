@@ -4,7 +4,7 @@
 
 {% block script_includes %}
     {{block.super}}
-
+    {% include "season2020/partials/include_submissionscripts.html"%}
     {% include "season2020/partials/include_queryparameterscripts.html"%}
     {% include "season2020/partials/include_storagescripts.html"%}
 
@@ -29,16 +29,13 @@
             window.location.replace("{% url 'season2020:home'%}");
         }
 
-        //actually push form 
-
         let form = queryParameters.getAll();
+        // label form as a match report instead of another database item
         form.isMatchReport = true;
-        console.log(form);
+        console.log(form)
+        // formSubmission loaded from script include
+        pushForm = formSubmission.submitForm;
 
-        //push form
-        let pushForm = function(formVal){
-            throw "pushing not yet implemented";
-        }
         //save form locally
         savePromise = store.saveReport(form);
         savePromise.catch(onError);
