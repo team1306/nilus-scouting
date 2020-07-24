@@ -4,7 +4,7 @@ var CACHE = 'network-or-cache';
 
 /* On install, cache some resource.*/
 self.addEventListener('install', function (evt) {
-  console.log('The service worker is being installed.');
+  console.log('The service worker is being installed. 1');
 
   /* Ask the service worker to keep installing until the returning promise
    resolves. */
@@ -18,7 +18,7 @@ self.addEventListener('fetch', function (evt) {
   /* Try network and if it fails, go for the cached copy. */
   evt.respondWith(fromNetwork(evt.request, 400).catch(function () {
     console.log('Fetching from cache');
-    return fromCache(removeQueryParameters(evt.request));
+    return fromCache(evt.request);
   }));
 });
 
@@ -27,10 +27,10 @@ self.addEventListener('fetch', function (evt) {
 function precache() {
   return caches.open(CACHE).then(function (cache) {
     return cache.addAll([
-      '{% url 'season2020:home' %}',
-      '{% url 'season2020:submit_view' %}',
-      '{% url 'season2020:scout' %}',
-      '{% static 'season2020/js/query-parameters.js' %}',
+      "{% url 'season2020:home' %}",
+      "{% url 'season2020:submit_view' %}",
+      "{% url 'season2020:scout' %}",
+      "{% static 'season2020/js/query-parameters.js' %}",
     ]);
   });
 }
@@ -44,7 +44,12 @@ function fromNetwork(request, timeout) {
     /* Fulfill in case of success. */
     fetch(request).then(function (response) {
       clearTimeout(timeoutId);
+      cacheResponse = response.clone();
       fulfill(response);
+      /* Update cache with most recent fetch */
+      caches.open(CACHE).then(function (cache) {
+        return cache.put(request, cacheResponse);
+      });
       /* Reject also if network fetch rejects. */
     }, reject);
   });
@@ -54,6 +59,7 @@ function fromNetwork(request, timeout) {
  resource. Notice that in case of no matching, the promise still resolves
  but it does with `undefined` as value. */
 function fromCache(request) {
+  request = removeQueryParameters(request);
   return caches.open(CACHE).then(function (cache) {
     return cache.match(request).then(function (matching) {
       return matching || Promise.reject('no-match');

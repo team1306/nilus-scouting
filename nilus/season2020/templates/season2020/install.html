@@ -17,18 +17,6 @@
 <body>
     <button onclick="window.installEvent.prompt()"> install </button>
 
-    <form action="{% url 'season2020:scout' %}">
-        <label for="matchNumber">Match Number</label>
-        <input type="number" step="1" name="matchNumber">
-        <br>
-        <label for="teamNumber">Team Number</label>
-        <input type="number" step="1" name="teamNumber">
-        <br>
-        <label for="teamName">Team Name</label>
-        <input type="text" name="teamName">
-        <input type="submit">
-    </form>
-
     <script>
         // Register service worker to satisfy install criteria
         navigator.serviceWorker.register("{% url 'season2020:service-worker.js' %}", {
