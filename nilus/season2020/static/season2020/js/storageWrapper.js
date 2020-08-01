@@ -33,7 +33,7 @@
 
 //namespace container
 var store = {};
-
+const unsubmittedRegistery = "unsubmitted";
 //check dependency scripts
 if (localforage) {
     console.log("Local Forage loaded correctly.")
@@ -75,16 +75,27 @@ store.reportToKey = function (report) {
  * @return {String} - the key, which is "M{matchNumber}:T{teamNumber}", eg "M4:T1306"
  */
 store.matchToKey = function (matchNumber, teamNumber) {
-    return "M"+matchNumber + ":T" + teamNumber;
+    return "M" + matchNumber + ":T" + teamNumber;
 }
 
 /** 
- * Locally saves the score report.
+ * Locally saves the score report. Updates the registery to 
  * 
  * @param {*} report - the match score report. MUST have fields matchNumber and teamNumber.
  */
 store.saveReport = function (report) {
     let key = store.reportToKey(report);
+
+    localforage.getItem(unsubmittedRegistery).then((unsubmitted) => {
+        // Make sure the fields we need are included in the unsubmitted registery
+        unsubmitted = unsubmitted || [];
+        console.log(unsubmitted);
+        // add current key to unsubmitted list
+        unsubmitted.push(key);
+        localforage.setItem(unsubmittedRegistery, unsubmitted);
+    });
+
+    // set report
     return localforage.setItem(key, report);
 }
 
@@ -136,6 +147,24 @@ store.fetchReportsByFunction = function (evalCallback) {
 }
 
 /**
+ * Gets the keys for all reports that have not been marked as submitted to the server.
+ * @return {Promise} .then( (keys) =>{})
+ */
+store.fetchUnsubmittedReportKeys = function () {
+    return localforage.getItem(unsubmittedRegistery);
+}
+
+store.markSubmitted = function (key) {
+    localforage.getItem(unsubmittedRegistery).then((unsubmitted) => {
+        // Make sure the fields we need are included in the unsubmitted registery
+        unsubmitted = unsubmitted || [];
+        // remove key from unsubmitted list
+        unsubmitted = unsubmitted.filter((val) => { return val !== key; });
+        localforage.setItem(unsubmittedRegistery, unsubmitted);
+    });
+}
+
+/**
  * Runs the given callback for every (key, value) pair that is a match report. 
  * 
  * NOTE: Changing field in the value parameter does not reflect in the database. Use store.saveReport
@@ -152,5 +181,23 @@ store.executeOnEach = function (callback) {
         }
         // not actually collecting information so don't add anything to the list.
         return false;
+    });
+}
+
+/**
+ * Runs the given callback for every (key, value) pair that is a match report and listed as unsubmitted. 
+ * 
+ * NOTE: Changing field in the value parameter does not reflect in the database. Use store.saveReport
+ * @param {Function} callback - takes params (key, value) for each match report
+ */
+store.executeOnEachUnsubmitted = function (callback) {
+    console.log("calling")
+    return store.fetchUnsubmittedReportKeys().then((keys) => {
+        keys = keys || [];
+        keys.forEach((key) => {
+            this.fetchReportByKey(key).then((result) => {
+                callback(key, result);
+            })
+        });
     });
 }

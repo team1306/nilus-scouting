@@ -13,42 +13,58 @@
         <th>Blue 2</th>
         <th>Blue 3</th>
     </tr>
-        {% for match in matches%}
-            <tr>
-                <td>{{match.number}}</td>
-                {%comment %}
-                    This bit of templating is absolutely disgusting. I'm holding off on fixing it
-                    though until we know what the TBA integration is going to change that schedule
-                    structure to.
-                {% endcomment %}
-                <td class = "red_team" id="M{{match.number}}:T{{match.red1}}"><a href = "{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.red1}}">{{match.red1}}</a></td>
-                <td class = "red_team" id="M{{match.number}}:T{{match.red2}}"><a href = "{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.red2}}">{{match.red2}}</a></td>
-                <td class = "red_team" id="M{{match.number}}:T{{match.red3}}"><a href = "{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.red3}}">{{match.red3}}</a></td>
-                <td class = "blue_team" id="M{{match.number}}:T{{match.blue1}}"><a href = "{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.blue1}}">{{match.blue1}}</a></td>
-                <td class = "blue_team" id="M{{match.number}}:T{{match.blue2}}"><a href = "{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.blue2}}">{{match.blue2}}</a></td>
-                <td class = "blue_team" id="M{{match.number}}:T{{match.blue3}}"><a href = "{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.blue3}}">{{match.blue3}}</a></td>
-            </tr> 
-        {% endfor %}
-        </table>
+    {% for match in matches%}
+    <tr>
+        <td>{{match.number}}</td>
+        {%comment %}
+        This bit of templating is absolutely disgusting. I'm holding off on fixing it
+        though until we know what the TBA integration is going to change that schedule
+        structure to.
+        {% endcomment %}
+        <td class="red_team" id="M{{match.number}}:T{{match.red1}}"><a
+                href="{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.red1}}">{{match.red1}}</a>
+        </td>
+        <td class="red_team" id="M{{match.number}}:T{{match.red2}}"><a
+                href="{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.red2}}">{{match.red2}}</a>
+        </td>
+        <td class="red_team" id="M{{match.number}}:T{{match.red3}}"><a
+                href="{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.red3}}">{{match.red3}}</a>
+        </td>
+        <td class="blue_team" id="M{{match.number}}:T{{match.blue1}}"><a
+                href="{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.blue1}}">{{match.blue1}}</a>
+        </td>
+        <td class="blue_team" id="M{{match.number}}:T{{match.blue2}}"><a
+                href="{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.blue2}}">{{match.blue2}}</a>
+        </td>
+        <td class="blue_team" id="M{{match.number}}:T{{match.blue3}}"><a
+                href="{% url 'season2020:scout'%}?matchNumber={{match.number}}&teamNumber={{match.blue3}}">{{match.blue3}}</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 {% endblock %}
 
 {% block script_includes %}
-    {{block.super}}
-    <script src="{% static 'global/js/localforage.js'%}"></script>
-    <script src="{% static 'global/js/localforagefind.js'%}"></script>
-    <script src="{% static 'season2020/js/storageWrapper.js'%}"></script>
-    <script>
-        store.executeOnEach((key, val)=>{
-            console.log("Key: "+key);
-            console.log(val);
-            console.log("\n");
+{{block.super}}
+{% include "season2020/partials/include_submissionscripts.html"%}
+{% include "season2020/partials/include_storagescripts.html"%}
 
-            // this should return the table cell for this match and team
-            let elem = document.getElementById(key); 
-            if(elem){
-               elem.className +=" completed"
-            }
-        });
-    </script>
+<script>
+    store.executeOnEach((key, val) => {
+        // this should return the table cell for this match and team
+        let elem = document.getElementById(key);
+        if (elem) {
+            elem.className += " completed"
+        }
+    });
+
+    // TODO do we want to run this every time the page loads?
+    store.executeOnEachUnsubmitted((key, val)=>{
+        formSubmission.submitForm(val).then(()=>{
+            store.markSubmitted(key);
+            console.log("Submission complete for "+ key);
+        })
+    });
+</script>
 {% endblock %}
