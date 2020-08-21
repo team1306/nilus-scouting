@@ -80,16 +80,16 @@ class ScoutResponse(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     # Autonomous
-    auto_low_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
-    auto_high_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
+    autoLow = models.PositiveIntegerField(null=True, blank=True, default=0)
+    autoHigh = models.PositiveIntegerField(null=True, blank=True, default=0)
     auto_can_intake = models.BooleanField(default=False)
 
     # Teleop
-    tele_low_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
-    tele_high_balls = models.PositiveIntegerField(null=True, blank=True, default=0)
-    tele_control_panel = models.BooleanField(default=False)
-    tele_did_climb = models.BooleanField(default=False)
-    tele_farthest_shot = models.CharField(max_length=2, blank=True, choices=SHOT_DISTANCE_CHOICES)
+    teleLow = models.PositiveIntegerField(null=True, blank=True, default=0)
+    teleHigh = models.PositiveIntegerField(null=True, blank=True, default=0)
+    teleControlPanel = models.BooleanField(default=False)
+    teleClimb = models.BooleanField(default=False)
+    distance = models.CharField(max_length=2, blank=True, choices=SHOT_DISTANCE_CHOICES)
 
     comments = models.TextField(blank=True)
 

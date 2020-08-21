@@ -1,5 +1,6 @@
 from django import http, urls
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.csrf import csrf_exempt
 
 from settings import settings
 
@@ -67,9 +68,29 @@ def home_page(request):
     }
     return render(request, "season2020/home.html", context=context)
 
-
+#TODO Figure out csrf
+@csrf_exempt
 def submit_form(request):
-    print(request.POST)
+    form = request.POST.dict()
+    print(form)
+    # remove form fields that we need to reference but not store
+    isMatchReport = form.pop("isMatchReport", False)
+    matchNumber = form.pop("matchNumber", False)
+    teamNumber = form.pop("teamNumber", False)
+
+    # remove form fields we don't need to reference or store
+    form.pop("storageKey")
+    form.pop("csrfmiddlewaretoken", None)
+
+    # make sure all the match report information is present
+    if not isMatchReport or not matchNumber or not teamNumber:
+        return http.HttpResponse(status=400)
+
+    # fetch appropriate team and match models to attatch to response
+    team = models.Team.objects.get(number=teamNumber)
+    match = models.Match.objects.get(number=matchNumber)
+
+    models.ScoutResponse(match = match, team = team, **form).save()
     return http.HttpResponse(status=200)
 
 
