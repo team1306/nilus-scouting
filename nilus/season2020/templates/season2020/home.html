@@ -50,6 +50,17 @@
 {% include "season2020/partials/include_submissionscripts.html"%}
 {% include "season2020/partials/include_storagescripts.html"%}
 
+
+<!-- I just put this here as a test for the notifications -->
+
+<script src="{% static 'season2020/js/notification-scripts.js'%}"></script>
+
+<script>
+    console.log("Trying to do a notification");
+    notificationScripts.messageServiceWorkerWithData("Welcome to the home page");
+</script>
+
+
 <script>
     store.executeOnEach((key, val) => {
         // this should return the table cell for this match and team

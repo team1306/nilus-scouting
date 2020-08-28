@@ -85,3 +85,21 @@ function removeQueryParameters(request) {
   // by passing in only the url, some information is lost. 
   return new Request(url);
 }
+
+/*
+This is for the notifications. This will listen for a message event from somewhere in the app,
+and when it gets a message it will do a push notification. I have to add more things for this to do
+other than just say some message.
+*/
+self.addEventListener('message', function (event) {
+  console.log(`The client sent me a message: ${event.data}`);
+
+  var title = 'Hi';
+  var body = event.data;
+
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: body,
+    })
+  );
+});
